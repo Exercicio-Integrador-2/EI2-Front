@@ -1,7 +1,30 @@
 .header{
     
     display: flex;
-    justify-content: center;
+    justify-content: space-evenly;
+    
+
+    .logo-div{
+        width: 100%;
+        display: flex;
+        justify-content: flex-start;
+        margin-left: 20px;
+        
+    }
+
+    .tittle-div{
+        width: 100%;
+        display: flex;
+        justify-content: center;
+    }
+
+    .user-div{
+        width: 100%;
+        display: flex;
+        justify-content:last baseline;
+        margin-right: 20px;
+        padding-top: 10px;
+    }
 
     .titulo{
         color: rgb(65, 65, 65);

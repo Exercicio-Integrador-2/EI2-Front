@@ -1,3 +1,23 @@
 <div class="header">
+  <div class="logo-div">
+    <img src="assets/img/logo.png" alt="Logo" width="150" />
+  </div>
+
+  <div class="tittle-div">
     <h1 class="titulo">RESERVA DE RECURSOS</h1>
+  </div>
+
+  <div class="user-div">
+    <mat-form-field>
+        <mat-label>Funcionário</mat-label>
+        <mat-select [(value)]="selected">
+            <mat-option>None</mat-option>
+            <mat-option value="option1">Option 1</mat-option>
+            <mat-option value="option2">Option 2</mat-option>
+            <mat-option value="option3">Option 3</mat-option>
+        </mat-select>
+        </mat-form-field>
+
+        <p>Matrícula: {{selected}}</p>
+  </div>
 </div>
