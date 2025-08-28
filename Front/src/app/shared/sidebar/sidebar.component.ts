@@ -1,10 +1,13 @@
 import { Component } from '@angular/core';
 
-// Angular Material — CORRETO:
+// Angular Material
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatIconModule } from '@angular/material/icon';
+
+// Angular Router
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-sidebar',
@@ -15,8 +18,8 @@ import { MatIconModule } from '@angular/material/icon';
     MatSidenavModule,
     MatListModule,
     MatExpansionModule,
-    MatIconModule
+    MatIconModule,
+    RouterModule   // <- necessário para o routerLink funcionar
   ]
 })
 export class SidebarComponent {}
-

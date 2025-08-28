@@ -3,14 +3,19 @@
     display: flex;
     justify-content: space-evenly;
     
-
     .logo-div{
         width: 100%;
         display: flex;
         justify-content: flex-start;
-        margin-left: 20px;
-        
+        margin-left: 20px; 
+
+        .logo {
+            width: 160px;
+            height: 80px;
+            object-fit: cover;
+        }
     }
+
 
     .tittle-div{
         width: 100%;
@@ -21,14 +26,14 @@
     .user-div{
         width: 100%;
         display: flex;
-        justify-content:last baseline;
+        justify-content:flex-end;
         margin-right: 20px;
-        padding-top: 10px;
     }
 
     .titulo{
         color: rgb(65, 65, 65);
         font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
         font-size: larger;
+        margin-top: 30px;
     }
 }

@@ -11,6 +11,5 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 export class HeaderComponent {
   logoPath: string = "assets/img/logo.png"
 
-  selected = 'info';
-
+  selected = '1234657';
 }

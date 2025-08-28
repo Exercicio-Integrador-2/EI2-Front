@@ -1,54 +1,41 @@
-<div class="sidebar">
+<mat-nav-list>
 
-<mat-sidenav-container class="sidenav-container">
-  <!-- Sidebar -->
-  <mat-sidenav mode="side" opened class="sidenav">
-    <mat-nav-list>
+  <!-- RESERVA -->
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        <mat-icon>calendar_today</mat-icon>
+        Reservas
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+    <a mat-list-item routerLink="/reservas/notebook">Notebook</a>
+    <a mat-list-item routerLink="/reservas/sala">Sala</a>
+    <a mat-list-item routerLink="/reservas/laboratorio">Laboratório</a>
+  </mat-expansion-panel>
 
-      <!-- RESERVA -->
-      <mat-expansion-panel>
-        <mat-expansion-panel-header>
-          <mat-panel-title>
-            <mat-icon>calendar_today</mat-icon>
-            Reservas
-          </mat-panel-title>
-        </mat-expansion-panel-header>
-        <a mat-list-item routerLink="#">Notebook</a>
-        <a mat-list-item routerLink="#">Sala</a>
-        <a mat-list-item routerLink="#">Laboratório</a>
-      </mat-expansion-panel>
+  <!-- DASHBOARD -->
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        <mat-icon>bar_chart</mat-icon>
+        Dashboards
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+    <a mat-list-item routerLink="/dashboards/geral">Geral</a>
+    <a mat-list-item routerLink="/dashboards/pessoal">Pessoal</a>
+  </mat-expansion-panel>
 
-      <!-- DASHBOARD -->
-      <mat-expansion-panel>
-        <mat-expansion-panel-header>
-          <mat-panel-title>
-            <mat-icon>bar_chart</mat-icon>
-            Dashboards
-          </mat-panel-title>
-        </mat-expansion-panel-header>
-        <a mat-list-item routerLink="#">Geral</a>
-        <a mat-list-item routerLink="#">Pessoal</a>
-      </mat-expansion-panel>
+  <!-- GERENCIAMENTO -->
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        <mat-icon>edit</mat-icon>
+        Gerenciamento
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+    <a mat-list-item routerLink="/gerenciamento/notebook">Notebook</a>
+    <a mat-list-item routerLink="/gerenciamento/sala">Sala</a>
+    <a mat-list-item routerLink="/gerenciamento/laboratorio">Laboratório</a>
+  </mat-expansion-panel>
 
-      <!-- GERENCIAMENTO -->
-      <mat-expansion-panel>
-        <mat-expansion-panel-header>
-          <mat-panel-title>
-            <mat-icon>edit</mat-icon>
-            Gerenciamento
-          </mat-panel-title>
-        </mat-expansion-panel-header>
-        <a mat-list-item routerLink="#">Notebook</a>
-        <a mat-list-item routerLink="#">Sala</a>
-        <a mat-list-item routerLink="#">Laboratório</a>
-      </mat-expansion-panel>
-
-    </mat-nav-list>
-  </mat-sidenav>
-
-  <!-- Área principal -->
-  <mat-sidenav-content class="main-content">
-  </mat-sidenav-content>
-</mat-sidenav-container>
-
-</div>
+</mat-nav-list>
