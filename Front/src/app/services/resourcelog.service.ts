@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { ResourceLogCreateDTO } from '../models/create/resource-log-create.dto';
 import { ResourcesStatusLogDTO } from '../models/get/resource-status/resources-status-log.dto';
 import { ResourceDTO } from '../models/get/resource.dto';
+import { ResourceLogDTO } from '../models/get/resource-log.dto';
 
 @Injectable({ providedIn: 'root' })
 export class ResourceLogService {
@@ -11,12 +12,12 @@ export class ResourceLogService {
 
   constructor(private http: HttpClient) {}
 
-  async getAll(): Promise<Observable<ResourceDTO[]>> {
-    return this.http.get<ResourceDTO[]>(this.baseUrl);
+  async getAll(): Promise<Observable<ResourceLogDTO[]>> {
+    return this.http.get<ResourceLogDTO[]>(this.baseUrl);
   }
 
-  async create(log: ResourceLogCreateDTO): Promise<Observable<ResourceDTO>> {
-    return this.http.post<ResourceDTO>(this.baseUrl, log);
+  async create(log: ResourceLogCreateDTO): Promise<Observable<ResourceLogCreateDTO>> {
+    return this.http.post<ResourceLogCreateDTO>(this.baseUrl, log);
   }
 
   /**
