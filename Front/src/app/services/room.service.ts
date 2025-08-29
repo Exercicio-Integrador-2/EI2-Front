@@ -14,9 +14,13 @@ export class RoomService {
     return this.http.get<RoomDTO[]>(this.baseUrl);
   }
 
-  update(room: RoomCreateDTO): Observable<RoomDTO> {
-    return this.http.put<RoomDTO>(this.baseUrl, room);
+  update(room: RoomDTO): Observable<RoomDTO> {
+     return this.http.put<RoomDTO>(
+    `${this.baseUrl}?roomId=${room.id}`,
+    room
+    );
   }
+
 
   async getByDate(date: string): Promise<Observable<RoomDTO[]>> {
     return this.http.get<RoomDTO[]>(`${this.baseUrl}/date?date=${date}`);

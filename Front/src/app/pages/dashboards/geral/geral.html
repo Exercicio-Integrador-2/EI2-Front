@@ -35,10 +35,13 @@
             
             <ng-container matColumnDef="acquisitionDate">
                 <th mat-header-cell *matHeaderCellDef> Data de Aquisição </th>
-                <td mat-cell *matCellDef="let element"> {{element.acquisitionDate}} </td>
+                <td mat-cell *matCellDef="let element"> 
+                    {{ element.acquisitionDate | date:'dd/MM/yyyy' }}
+                </td>
             </ng-container>
 
-                <!-- Edit Btn Column -->
+
+            <!-- Edit Btn Column -->
             <ng-container matColumnDef="edit">
                 <th mat-header-cell *matHeaderCellDef>  </th>
                 <td mat-cell *matCellDef="let element">
@@ -78,8 +81,14 @@
                 
                 <ng-container matColumnDef="projector">
                     <th mat-header-cell *matHeaderCellDef> Projetor </th>
-                    <td mat-cell *matCellDef="let element"> {{element.projector}} </td>
+                    <td mat-cell *matCellDef="let element">
+                        <mat-icon *ngIf="element.projector === true; else notOk" color="primary">check</mat-icon>
+                        <ng-template #notOk>
+                        <mat-icon color="warn">close</mat-icon>
+                        </ng-template>
+                    </td>
                 </ng-container>
+
 
                     <!-- Edit Btn Column -->
                 <ng-container matColumnDef="edit">

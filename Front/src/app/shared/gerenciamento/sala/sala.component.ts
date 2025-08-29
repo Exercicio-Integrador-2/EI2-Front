@@ -8,6 +8,7 @@ import {MatDividerModule} from '@angular/material/divider';
 import {MatButtonModule} from '@angular/material/button';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { RoomService } from '../../../services/room.service';
 
 
 @Component({
@@ -18,22 +19,27 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 })
 export class SalaGerenciamentoComponent {
   editableData: any;
-  projetorChecked: boolean;
 
    constructor(
     public dialogRef: MatDialogRef<SalaGerenciamentoComponent>, 
+    private roomService: RoomService,
     @Inject(MAT_DIALOG_DATA) public data: any 
   ) {
     //cria um cópia
     this.editableData = { ...data };
-    
-    this.projetorChecked = this.editableData.projetor === 'Sim';
+
   }
 
   onSave(): void {
-    this.editableData.projetor = this.projetorChecked ? 'Sim' : 'Não';
-    //retorna os dados novos
-    this.dialogRef.close(this.editableData);
+    this.roomService.update(this.editableData).subscribe(
+      response => {
+        console.log('Sala atualizada com sucesso:', response);
+        this.dialogRef.close(this.editableData);
+      },
+      error => {
+        console.error('Erro ao atualizar sala:', error);
+      }
+    );
   }
   
 }
