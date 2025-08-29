@@ -1,0 +1,99 @@
+<div class="page">
+
+  <!-- Inputs de datas -->
+  <div class="date-inputs">
+    <mat-form-field appearance="fill">
+      <mat-label>Data Inicial</mat-label>
+      <input matInput [matDatepicker]="pickerStart" [(ngModel)]="startDate">
+      <mat-datepicker-toggle matSuffix [for]="pickerStart"></mat-datepicker-toggle>
+      <mat-datepicker #pickerStart></mat-datepicker>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Data Final</mat-label>
+      <input matInput [matDatepicker]="pickerEnd" [(ngModel)]="endDate">
+      <mat-datepicker-toggle matSuffix [for]="pickerEnd"></mat-datepicker-toggle>
+      <mat-datepicker #pickerEnd></mat-datepicker>
+    </mat-form-field>
+
+    <button mat-raised-button color="primary" (click)="fetchData()">Buscar</button>
+  </div>
+
+  <!-- Toggle de visualização -->
+  <div class="buttons">
+    <mat-button-toggle-group (valueChange)="onViewChange($event)" value="daily" name="viewToggle">
+      <mat-button-toggle value="daily">Alocações Diárias</mat-button-toggle>
+      <mat-button-toggle value="loaned">Recursos Emprestados</mat-button-toggle>
+      <mat-button-toggle value="busiest">Dias Mais Ocupados</mat-button-toggle>
+    </mat-button-toggle-group>
+  </div>
+
+  <!-- Tabelas -->
+  <div class="table-container" [ngSwitch]="selectedView">
+
+    <!-- Daily Allocations -->
+    <div *ngSwitchCase="'daily'">
+      <table mat-table [dataSource]="dailyAllocationsDataSource" class="mat-elevation-z8">
+
+        <ng-container matColumnDef="date">
+          <th mat-header-cell *matHeaderCellDef> Data </th>
+          <td mat-cell *matCellDef="let element"> {{element.date}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="resourceCount">
+          <th mat-header-cell *matHeaderCellDef> Quantidade de Recursos </th>
+          <td mat-cell *matCellDef="let element"> {{element.resourceCount}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="loanedResources">
+          <th mat-header-cell *matHeaderCellDef> Recursos Emprestados </th>
+          <td mat-cell *matCellDef="let element">
+            <span *ngFor="let r of element.loanedResources">{{r.name}} ({{r.resourceType}}) </span>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="dailyColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: dailyColumns;"></tr>
+      </table>
+    </div>
+
+    <!-- Resources Loaned Counts -->
+    <div *ngSwitchCase="'loaned'">
+      <table mat-table [dataSource]="resourcesLoanedDataSource" class="mat-elevation-z8">
+
+        <ng-container matColumnDef="resourceType">
+          <th mat-header-cell *matHeaderCellDef> Tipo de Recurso </th>
+          <td mat-cell *matCellDef="let element"> {{element.resourceType}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="resourcesCount">
+          <th mat-header-cell *matHeaderCellDef> Quantidade </th>
+          <td mat-cell *matCellDef="let element"> {{element.resourcesCount}} </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="loanedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: loanedColumns;"></tr>
+      </table>
+    </div>
+
+    <!-- Busiest Days -->
+    <div *ngSwitchCase="'busiest'">
+      <table mat-table [dataSource]="busiestDaysDataSource" class="mat-elevation-z8">
+
+        <ng-container matColumnDef="dayOfWeek">
+          <th mat-header-cell *matHeaderCellDef> Dia da Semana </th>
+          <td mat-cell *matCellDef="let element"> {{element.dayOfWeek}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="allocationCount">
+          <th mat-header-cell *matHeaderCellDef> Alocações </th>
+          <td mat-cell *matCellDef="let element"> {{element.allocationCount}} </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="busiestColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: busiestColumns;"></tr>
+      </table>
+    </div>
+
+  </div>
+</div>
