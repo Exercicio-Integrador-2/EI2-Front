@@ -6,6 +6,11 @@ import { MatDatepickerModule } from "@angular/material/datepicker";
 import { MatNativeDateModule } from "@angular/material/core"; 
 import { MatButtonModule } from "@angular/material/button"; 
 import { MatTableModule } from "@angular/material/table";
+import { CommonModule } from '@angular/common';
+import { NotebookService } from '../../../services/notebook.service';
+import { NotebookDTO } from '../../../models/get/notebook.dto';
+import { ResourceLogService } from '../../../services/resourcelog.service';
+import { ResourceLogCreateDTO } from '../../../models/create/resource-log-create.dto';
 
 @Component({
   selector: 'app-notebook',
@@ -19,7 +24,8 @@ import { MatTableModule } from "@angular/material/table";
     MatDatepickerModule,
     MatNativeDateModule,
     MatButtonModule,
-    MatTableModule
+    MatTableModule,
+    CommonModule
   ]
 })
 export class NotebookComponent {
@@ -28,42 +34,26 @@ export class NotebookComponent {
   displayedColumns: string[] = ['name', 'patrimonyNumber', 'description', 'status', 'actions'];
 
   constructor(
-    // private reservaService: ReservaService   // ← descomentar e injetar quando integrar
+    private notebookService : NotebookService,
+    private resourceLogService : ResourceLogService
   ) {}
 
-  buscarDisponiveis() {
+  async buscarDisponiveis() {
     if (!this.selectedDate) return;
 
     const dataISO = this.selectedDate.toISOString().split('T')[0];
 
-    // chamada real pro backend
-    /*
-    this.reservaService.getDisponiveisPorData(dataISO).subscribe({
-      next: (data) => this.notebooks = data,
-      error: (err) => console.error('Erro ao carregar notebooks', err)
+    (await this.notebookService.getByDate(dataISO)).subscribe((notebooks: NotebookDTO[]) => {
+      this.notebooks = notebooks;
     });
-    */
-
-    // MOCK temporário ↓
-    this.notebooks = [
-      { name: 'Dell Inspiron', patrimonyNumber: '123', description: 'Notebook de testes' },
-      { name: 'Lenovo ThinkPad', patrimonyNumber: '456', description: 'Notebook de trabalho' },
-      { name: 'Acer Aspire', patrimonyNumber: '789', description: 'Notebook reserva' },
-    ];
   }
 
-  reservar(notebook: any) {
+  async reservar(resourceLog : ResourceLogCreateDTO) {
     if (!this.selectedDate) return;
 
     const dataISO = this.selectedDate.toISOString().split('T')[0];
 
-    // chamada real pro backend
-    /*
-    this.reservaService.reservarNotebook(notebook.id, dataISO).subscribe({
-      next: () => this.buscarDisponiveis(),
-      error: (err) => console.error('Erro ao reservar', err)
-    });
-    */
+    (await this.resourceLogService.create())
 
     // MOCK temporário ↓
     console.log(`Reservado ${notebook.name} (${notebook.patrimonyNumber}) para ${dataISO}`);
