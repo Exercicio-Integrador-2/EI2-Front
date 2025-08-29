@@ -20,8 +20,6 @@ export const routes: Routes = [
     { path: 'dashboards/pessoal', component: PessoalComponent },
 
     { path: 'gerenciamento/notebook', component: NotebookGerenciamentoComponent },
-    { path: 'gerenciamento/sala', component: SalaGerenciamentoComponent },
-    { path: 'gerenciamento/laboratorio', component: LaboratorioGerenciamentoComponent },
 
     // Página não encontrada
     { path: '**', redirectTo: '' }
