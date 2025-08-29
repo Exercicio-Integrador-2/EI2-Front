@@ -14,7 +14,7 @@ export class RoomService {
     return this.http.get<RoomDTO[]>(this.baseUrl);
   }
 
-  async update(room: RoomCreateDTO): Promise<Observable<RoomDTO>> {
+  update(room: RoomCreateDTO): Observable<RoomDTO> {
     return this.http.put<RoomDTO>(this.baseUrl, room);
   }
 

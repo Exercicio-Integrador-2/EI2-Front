@@ -14,11 +14,11 @@ export class NotebookService {
     return this.http.get<NotebookDTO[]>(this.baseUrl);
   }
 
-  async create(notebook: NotebookCreateDTO): Promise<Observable<NotebookDTO>> {
+  create(notebook: NotebookCreateDTO): Observable<NotebookDTO> {
     return this.http.post<NotebookDTO>(this.baseUrl, notebook);
   }
 
-  async update(notebook: NotebookCreateDTO): Promise<Observable<NotebookDTO>> {
+  update(notebook: NotebookCreateDTO): Observable<NotebookDTO> {
     return this.http.put<NotebookDTO>(this.baseUrl, notebook);
   }
 

@@ -1,1 +1,60 @@
-<p>laboratorio works!</p>
+<div class="container">
+  <mat-form-field appearance="outline">
+    <mat-label>Selecione a data</mat-label>
+    <input 
+      matInput 
+      [matDatepicker]="picker" 
+      [(ngModel)]="selectedDate" 
+      (dateChange)="buscarDisponiveis()" />
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+  </mat-form-field>
+
+  <table *ngIf="laboratories.length > 0" 
+         mat-table [dataSource]="laboratories" 
+         class="mat-elevation-z8 full-width-table">
+
+    <!-- Nome -->
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef> Nome </th>
+      <td mat-cell *matCellDef="let laboratory"> {{laboratory.name}} </td>
+    </ng-container>
+
+    <!-- Quantidade de PCs -->
+    <ng-container matColumnDef="pcQuantity">
+      <th mat-header-cell *matHeaderCellDef> Quantidade de PCs </th>
+      <td mat-cell *matCellDef="let laboratory"> {{laboratory.pcQuantity}} </td>
+    </ng-container>
+
+    <!-- Descrição -->
+    <ng-container matColumnDef="description">
+      <th mat-header-cell *matHeaderCellDef> Descrição </th>
+      <td mat-cell *matCellDef="let laboratory"> {{laboratory.pcDescription}} </td>
+    </ng-container>
+
+    <!-- Status -->
+    <ng-container matColumnDef="status">
+      <th mat-header-cell *matHeaderCellDef> Status </th>
+      <td mat-cell *matCellDef="let laboratory">
+        <span class="text-green-600"> Disponível </span>
+      </td>
+    </ng-container>
+
+    <!-- Ações -->
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef> Ações </th>
+      <td mat-cell *matCellDef="let laboratory">
+        <button mat-raised-button color="primary" (click)="reservar(laboratory)">
+          Reservar
+        </button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+
+  <p *ngIf="selectedDate && laboratories.length === 0" class="text-red-600">
+    Nenhum laboratory disponível nesta data.
+  </p>
+</div>

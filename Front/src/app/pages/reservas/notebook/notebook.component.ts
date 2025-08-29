@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, resource } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatInputModule } from "@angular/material/input"; 
@@ -11,6 +11,9 @@ import { NotebookService } from '../../../services/notebook.service';
 import { NotebookDTO } from '../../../models/get/notebook.dto';
 import { ResourceLogService } from '../../../services/resourcelog.service';
 import { ResourceLogCreateDTO } from '../../../models/create/resource-log-create.dto';
+import { SelectedEmployeeService } from '../../../services/selectedEmployeeService';
+import { EmployeeDTO } from '../../../models/get/employee.dto';
+import { firstValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-notebook',
@@ -35,7 +38,8 @@ export class NotebookComponent {
 
   constructor(
     private notebookService : NotebookService,
-    private resourceLogService : ResourceLogService
+    private resourceLogService : ResourceLogService,
+    private selectedEmployeeService: SelectedEmployeeService
   ) {}
 
   async buscarDisponiveis() {
@@ -48,13 +52,25 @@ export class NotebookComponent {
     });
   }
 
-  async reservar(resourceLog : ResourceLogCreateDTO) {
+  async reservar(notebook: NotebookDTO) {
     if (!this.selectedDate) return;
+
+    const employee : EmployeeDTO | null = (await this.selectedEmployeeService.getEmployee());
+    console.log(employee);
+
+    if (!employee) return;
 
     const dataISO = this.selectedDate.toISOString().split('T')[0];
 
-    //(await this.resourceLogService.create())
+    const resourceLog: ResourceLogCreateDTO = {
+      loanDate: dataISO,
+      resourceId: notebook.id,
+      employeeId: employee.enrollmentId
+    };
 
+    await firstValueFrom(this.resourceLogService.create(resourceLog));
+
+    // "Reload"
     this.buscarDisponiveis();
   }
 }
