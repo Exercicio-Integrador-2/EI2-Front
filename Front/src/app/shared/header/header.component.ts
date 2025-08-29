@@ -1,15 +1,39 @@
-import { Component } from '@angular/core';
-import {MatSelectModule} from '@angular/material/select';
-import {MatFormFieldModule} from '@angular/material/form-field';
+import { Component, OnInit } from '@angular/core';
+import { MatSelectModule } from '@angular/material/select';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { CommonModule } from '@angular/common';
+import { EmployeeDTO } from '../../models/get/employee.dto';
+import { EmployeeService } from '../../services/employee.service';
+import { SelectedEmployeeService } from '../../services/selectedEmployeeService';
 
 @Component({
   selector: 'app-header',
-  imports: [MatFormFieldModule, MatSelectModule],
+  standalone: true,
+  imports: [MatFormFieldModule, MatSelectModule, CommonModule],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss'
 })
-export class HeaderComponent {
-  logoPath: string = "assets/img/logo.png"
+export class HeaderComponent implements OnInit {
+  logoPath: string = "assets/img/logo.png";
 
-  selected = '1234657';
+  employees: EmployeeDTO[] = [];
+  selected: EmployeeDTO | null = null;
+
+  constructor(
+    private employeeService: EmployeeService,
+    private selectedEmployeeService: SelectedEmployeeService
+  ) {}
+
+  ngOnInit(): void {
+    this.employeeService.getAll().then(obs => {
+      obs.subscribe(data => {
+        this.employees = data;
+      });
+    });
+  }
+
+  onUserChange(employee: EmployeeDTO) {
+    this.selected = employee;
+    this.selectedEmployeeService.setEmployee(employee);
+  }
 }
