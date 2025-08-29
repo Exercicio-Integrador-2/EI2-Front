@@ -1,0 +1,193 @@
+<div class="test-services">
+  <h2>Test Services Page</h2>
+
+  <section>
+    <h3>Employees</h3>
+    <table *ngIf="employees?.length; else noEmployees">
+      <thead>
+        <tr><th>ID</th><th>Name</th><th>Role</th><th>Enrollment Date</th></tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let e of employees">
+          <td>{{ e.enrollmentId }}</td>
+            <td>{{ e.name || '-' }}</td>
+            <td>{{ e.role }}</td>
+            <td>{{ e.enrollmentDate | date:'short' }}</td>
+        </tr>
+      </tbody>
+    </table>
+    <ng-template #noEmployees><em>No employees</em></ng-template>
+    <details>
+      <summary>Raw JSON</summary>
+      <pre>{{ employees | json }}</pre>
+    </details>
+  </section>
+
+  <section>
+    <h3>Laboratories</h3>
+    <table *ngIf="laboratories?.length; else noLabs">
+      <thead>
+        <tr><th>ID</th><th>Name</th><th>PC Qty</th><th>Booked Dates</th></tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let l of laboratories">
+          <td>{{ l.id }}</td>
+          <td>{{ l.name || '-' }}</td>
+          <td>{{ l.pcQuantity }}</td>
+          <td>{{ l.bookedDates?.length || 0 }}</td>
+        </tr>
+      </tbody>
+    </table>
+    <ng-template #noLabs><em>No laboratories</em></ng-template>
+    <details><summary>Raw JSON</summary><pre>{{ laboratories | json }}</pre></details>
+  </section>
+
+  <section>
+    <h3>Notebooks</h3>
+    <table *ngIf="notebooks?.length; else noNotebooks">
+      <thead>
+        <tr><th>ID</th><th>Name</th><th>Patrimony</th><th>Acquired</th></tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let n of notebooks">
+          <td>{{ n.id }}</td>
+          <td>{{ n.name || '-' }}</td>
+          <td>{{ n.patrimonyNumber }}</td>
+          <td>{{ n.acquisitionDate | date:'shortDate' }}</td>
+        </tr>
+      </tbody>
+    </table>
+    <ng-template #noNotebooks><em>No notebooks</em></ng-template>
+    <div class="notebook-actions">
+      <button (click)="createNotebook()">Create Notebook</button>
+      <button (click)="updateNotebook()" [disabled]="!createdNotebook">Update Notebook</button>
+      <button (click)="deleteNotebook()" [disabled]="!createdNotebook">Delete Notebook</button>
+    </div>
+    <div *ngIf="createdNotebook" class="result-block">
+      <h4>Created Notebook</h4>
+      <pre>{{ createdNotebook | json }}</pre>
+    </div>
+    <div *ngIf="updatedNotebook" class="result-block">
+      <h4>Updated Notebook</h4>
+      <pre>{{ updatedNotebook | json }}</pre>
+    </div>
+    <details><summary>Raw JSON</summary><pre>{{ notebooks | json }}</pre></details>
+  </section>
+
+  <section>
+    <h3>Resources</h3>
+    <table *ngIf="resources?.length; else noResources">
+      <thead>
+        <tr><th>ID</th><th>Name</th><th>Type</th><th>Booked</th></tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let r of resources">
+          <td>{{ r.id }}</td>
+          <td>{{ r.name || '-' }}</td>
+          <td>{{ r.resourceType || '-' }}</td>
+          <td>{{ r.bookedDates?.length || 0 }}</td>
+        </tr>
+      </tbody>
+    </table>
+    <ng-template #noResources><em>No resources</em></ng-template>
+    <details><summary>Raw JSON</summary><pre>{{ resources | json }}</pre></details>
+  </section>
+
+  <section>
+    <h3>Rooms</h3>
+    <table *ngIf="rooms?.length; else noRooms">
+      <thead>
+        <tr><th>ID</th><th>Name</th><th>Number</th><th>Capacity</th><th>Projector</th></tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let rm of rooms">
+          <td>{{ rm.id }}</td>
+          <td>{{ rm.name || '-' }}</td>
+          <td>{{ rm.roomNumber }}</td>
+          <td>{{ rm.capacity }}</td>
+          <td>{{ rm.projector ? 'Yes' : 'No' }}</td>
+        </tr>
+      </tbody>
+    </table>
+    <ng-template #noRooms><em>No rooms</em></ng-template>
+    <details><summary>Raw JSON</summary><pre>{{ rooms | json }}</pre></details>
+  </section>
+
+  <section>
+    <h3>Resource Status (Aggregated)</h3>
+    <form (submit)="loadResourceStatus(); $event.preventDefault()" class="filter-form" style="margin-bottom:8px; display:flex; gap:12px; align-items:flex-end; flex-wrap:wrap;">
+      <label style="display:flex; flex-direction:column; font-size:12px;">
+        Start Date
+        <input type="date" [(ngModel)]="statusStartDate" name="statusStartDate" />
+      </label>
+      <label style="display:flex; flex-direction:column; font-size:12px;">
+        End Date
+        <input type="date" [(ngModel)]="statusEndDate" name="statusEndDate" />
+      </label>
+      <div style="display:flex; gap:6px;">
+  <button type="button" (click)="loadResourceStatus()" [disabled]="loadingResourceStatus || !statusStartDate || !statusEndDate">Load</button>
+  <button type="button" (click)="statusStartDate=''; statusEndDate=''; resourceStatus=undefined; resourceStatusError=undefined" [disabled]="loadingResourceStatus">Clear</button>
+      </div>
+      <span *ngIf="loadingResourceStatus">Loading...</span>
+    </form>
+    <div *ngIf="resourceStatusError" style="color:red;">
+      {{ resourceStatusError }}
+    </div>
+
+    <div *ngIf="resourceStatus; else noResourceStatus">
+      <details open>
+        <summary>Daily Allocations ({{ resourceStatus.dailyAllocations?.length || 0 }})</summary>
+        <table *ngIf="resourceStatus.dailyAllocations?.length">
+          <thead>
+            <tr><th>Date</th><th>Allocated Count</th></tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let d of resourceStatus.dailyAllocations">
+              <td>{{ d.date | date:'yyyy-MM-dd' }}</td>
+              <td>{{ d.resourceCount }}</td>
+            </tr>
+          </tbody>
+        </table>
+        <em *ngIf="!resourceStatus.dailyAllocations?.length">None</em>
+      </details>
+
+      <details>
+        <summary>Resources Loaned Counts ({{ resourceStatus.resourcesLoanedCounts?.length || 0 }})</summary>
+        <table *ngIf="resourceStatus.resourcesLoanedCounts?.length">
+          <thead>
+            <tr><th>Type</th><th>Count</th></tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let c of resourceStatus.resourcesLoanedCounts">
+              <td>{{ c.resourceType }}</td>
+              <td>{{ c.resourcesCount }}</td>
+            </tr>
+          </tbody>
+        </table>
+        <em *ngIf="!resourceStatus.resourcesLoanedCounts?.length">None</em>
+      </details>
+
+      <details>
+        <summary>Busiest Days ({{ resourceStatus.busiestDays?.length || 0 }})</summary>
+        <table *ngIf="resourceStatus.busiestDays?.length">
+          <thead>
+            <tr><th>Date</th><th>Loans</th></tr>
+          </thead>
+            <tbody>
+              <tr *ngFor="let b of resourceStatus.busiestDays">
+                <td>{{ b.dayOfWeek || '-' }}</td>
+                <td>{{ b.allocationCount }}</td>
+              </tr>
+            </tbody>
+        </table>
+        <em *ngIf="!resourceStatus.busiestDays?.length">None</em>
+      </details>
+
+      <details style="margin-top:8px;">
+        <summary>Raw JSON</summary>
+        <pre>{{ resourceStatus | json }}</pre>
+      </details>
+    </div>
+    <ng-template #noResourceStatus><em>No status data loaded yet.</em></ng-template>
+  </section>
+</div>

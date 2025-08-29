@@ -8,6 +8,7 @@ import { NotebookGerenciamentoComponent } from './pages/gerenciamento/notebook/n
 import { SalaGerenciamentoComponent } from './pages/gerenciamento/sala/sala.component';
 import { LaboratorioGerenciamentoComponent } from './pages/gerenciamento/laboratorio/laboratorio.component';
 import { HomeComponent } from './pages/home/home.component';
+import { TestServicesComponent } from './pages/test-services/test-services.component';
 
 export const routes: Routes = [
     { path: '', component: HomeComponent }, // raiz = home
@@ -22,6 +23,8 @@ export const routes: Routes = [
     { path: 'gerenciamento/notebook', component: NotebookGerenciamentoComponent },
     { path: 'gerenciamento/sala', component: SalaGerenciamentoComponent },
     { path: 'gerenciamento/laboratorio', component: LaboratorioGerenciamentoComponent },
+
+    { path: 'test-services', component: TestServicesComponent},
 
     // Página não encontrada
     { path: '**', redirectTo: '' }
