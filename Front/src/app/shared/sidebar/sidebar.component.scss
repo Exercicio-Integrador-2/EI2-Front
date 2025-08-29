@@ -1,31 +1,4 @@
-.page {
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-
-  .bottom {
-    flex: 1;
-    display: flex;
-    width: 100%;
-  }
-
-  .sidenav-container {
-    flex: 1;          // ocupa toda largura
-    display: flex;
-  }
-
-  .sidenav {
-    width: 100%;       // sidebar agora ocupa toda largura
-    flex-shrink: 0;
-  }
-
-  .main-content {
-    flex: 1;
-    padding: 16px;
-  }
-
-  .mat-icon {
-    margin-right: 5px;
-    color: rgb(65, 65, 65);
-  }
+.mat-icon {
+  margin-right: 5px;
+  color: rgb(65, 65, 65);
 }

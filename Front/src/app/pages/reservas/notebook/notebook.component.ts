@@ -1,14 +1,60 @@
 import { Component } from '@angular/core';
-import {MatProgressBarModule} from '@angular/material/progress-bar';
-import {MatCardModule} from '@angular/material/card';
-import {MatChipsModule} from '@angular/material/chips';
+import { FormsModule } from '@angular/forms';
+import { MatFormFieldModule } from "@angular/material/form-field";
+import { MatInputModule } from "@angular/material/input"; 
+import { MatDatepickerModule } from "@angular/material/datepicker"; 
+import { MatNativeDateModule } from "@angular/material/core"; 
+import { MatButtonModule } from "@angular/material/button"; 
+import { MatTableModule } from "@angular/material/table";
+import { CommonModule } from '@angular/common';
+import { NotebookService } from '../../../services/notebook.service';
+import { NotebookDTO } from '../../../models/get/notebook.dto';
+import { ResourceLogService } from '../../../services/resourcelog.service';
+import { ResourceLogCreateDTO } from '../../../models/create/resource-log-create.dto';
 
 @Component({
   selector: 'app-notebook',
-  imports: [MatProgressBarModule, MatCardModule, MatChipsModule],
+  standalone: true,
   templateUrl: './notebook.html',
-  styleUrl: './notebook.scss'
+  styleUrls: ['./notebook.scss'],
+  imports: [
+    FormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatButtonModule,
+    MatTableModule,
+    CommonModule
+  ]
 })
 export class NotebookComponent {
-  longText = 'lasidjaiugfewijugffffffffffffffffffffffffffffffffffffffffrijgbreiuhgreihju'
+  selectedDate: Date | null = null;
+  notebooks: any[] = [];
+  displayedColumns: string[] = ['name', 'patrimonyNumber', 'description', 'status', 'actions'];
+
+  constructor(
+    private notebookService : NotebookService,
+    private resourceLogService : ResourceLogService
+  ) {}
+
+  async buscarDisponiveis() {
+    if (!this.selectedDate) return;
+
+    const dataISO = this.selectedDate.toISOString().split('T')[0];
+
+    (await this.notebookService.getByDate(dataISO)).subscribe((notebooks: NotebookDTO[]) => {
+      this.notebooks = notebooks;
+    });
+  }
+
+  async reservar(resourceLog : ResourceLogCreateDTO) {
+    if (!this.selectedDate) return;
+
+    const dataISO = this.selectedDate.toISOString().split('T')[0];
+
+    //(await this.resourceLogService.create())
+
+    this.buscarDisponiveis();
+  }
 }
