@@ -13,78 +13,78 @@ import { SalaGerenciamentoComponent } from '../../../shared/gerenciamento/sala/s
 
 export const NOTEBOOKS_DATA = [
   { 
-    nome: 'Dell Latitude 5420', 
-    patrimonio: 'NTB00123', 
-    desc: 'Core i5, 16GB RAM, 256GB SSD', 
-    data: '15/05/2024' 
+    name: 'Dell Latitude 5420', 
+    patrimonyNumber: '00123', 
+    description: 'Core i5, 16GB RAM, 256GB SSD', 
+    acquisitionDate: '15/05/2024' 
   },
   { 
-    nome: 'HP Probook 440 G8', 
-    patrimonio: 'NTB00124', 
-    desc: 'Ryzen 5, 8GB RAM, 512GB SSD', 
-    data: '22/08/2024' 
+    name: 'HP Probook 440 G8', 
+    patrimonyNumber: '00124', 
+    description: 'Ryzen 5, 8GB RAM, 512GB SSD', 
+    acquisitionDate: '22/08/2024' 
   },
   { 
-    nome: 'Lenovo ThinkPad T14', 
-    patrimonio: 'NTB00125', 
-    desc: 'Core i7, 16GB RAM, 1TB SSD', 
-    data: '10/01/2025' 
+    name: 'Lenovo ThinkPad T14', 
+    patrimonyNumber: '00125', 
+    description: 'Core i7, 16GB RAM, 1TB SSD', 
+    acquisitionDate: '10/01/2025' 
   },
   { 
-    nome: 'MacBook Air M2', 
-    patrimonio: 'NTB00126', 
-    desc: 'Chip M2, 8GB RAM, 256GB SSD', 
-    data: '05/03/2025' 
+    name: 'MacBook Air M2', 
+    patrimonyNumber: '00126', 
+    description: 'Chip M2, 8GB RAM, 256GB SSD', 
+    acquisitionDate: '05/03/2025' 
   },
 ];
 
 export const SALAS_DATA = [
   { 
-    nome: 'Sala de Reuniões Atlântida', 
-    num: 101, 
-    capacidade: 8, 
-    projetor: 'Sim' 
+    name: 'Sala de Reuniões Atlântida', 
+    roomNumber: 101, 
+    capacity: 8, 
+    projector: 'Sim' 
   },
   { 
-    nome: 'Sala de Foco 1', 
-    num: 102, 
-    capacidade: 4, 
-    projetor: 'Não' 
+    name: 'Sala de Foco 1', 
+    roomNumber: 102, 
+    capacity: 4, 
+    projector: 'Não' 
   },
   { 
-    nome: 'Sala de Treinamento Alfa', 
-    num: 205, 
-    capacidade: 20, 
-    projetor: 'Sim' 
+    name: 'Sala de Treinamento Alfa', 
+    roomNumber: 205, 
+    capacity: 20, 
+    projector: 'Sim' 
   },
   { 
-    nome: 'Auditório Beta', 
-    num: 310, 
-    capacidade: 50, 
-    projetor: 'Sim' 
+    name: 'Auditório Beta', 
+    roomNumber: 310, 
+    capacity: 50, 
+    projector: 'Sim' 
   },
 ];
 
 export const LABS_DATA = [
   { 
-    nome: 'Laboratório de Redes', 
-    qtd_pc: 20, 
-    desc: 'Equipado com switches e roteadores Cisco' 
+    name: 'Laboratório de Redes', 
+    pcQuantity: 20, 
+    pcDescription: 'Equipado com switches e roteadores Cisco' 
   },
   { 
-    nome: 'Laboratório de Hardware', 
-    qtd_pc: 15, 
-    desc: 'Bancadas com fontes, osciloscópios e multímetros' 
+    name: 'Laboratório de Hardware', 
+    pcQuantity: 15, 
+    pcDescription: 'Bancadas com fontes, osciloscópios e multímetros' 
   },
   { 
-    nome: 'Laboratório de Programação', 
-    qtd_pc: 25, 
-    desc: 'Computadores com múltiplos IDEs e compiladores' 
+    name: 'Laboratório de Programação', 
+    pcQuantity: 25, 
+    pcDescription: 'Computadores com múltiplos IDEs e compiladores' 
   },
   { 
-    nome: 'Laboratório de Design Gráfico', 
-    qtd_pc: 18, 
-    desc: 'iMacs com suíte Adobe Creative Cloud instalada' 
+    name: 'Laboratório de Design Gráfico', 
+    pcQuantity: 18, 
+    pcDescription: 'iMacs com suíte Adobe Creative Cloud instalada' 
   },
 ];
 
@@ -100,13 +100,13 @@ export class GeralComponent{
   selectedView: string = 'notes'; 
 
   notebooksDataSource = new MatTableDataSource<any>();
-  notebooksDisplayedColumns: string[] = ['nome', 'patrimonio', 'desc', 'data', 'edit'];
+  notebooksDisplayedColumns: string[] = ['name', 'patrimonyNumber', 'description', 'acquisitionDate', 'edit'];
 
   salasDataSource = new MatTableDataSource<any>();;
-  salasDisplayedColumns: string[] = ['nome', 'num', 'capacidade', 'projetor', 'edit'];
+  salasDisplayedColumns: string[] = ['name', 'roomNumber', 'capacity', 'projector', 'edit'];
 
   labsDataSource = new MatTableDataSource<any>();
-  labsDisplayedColumns: string[] = ['nome', 'qtd_pc', 'desc', 'edit'];
+  labsDisplayedColumns: string[] = ['name', 'pcQuantity', 'pcDescription', 'edit'];
 
 
   ngOnInit() {

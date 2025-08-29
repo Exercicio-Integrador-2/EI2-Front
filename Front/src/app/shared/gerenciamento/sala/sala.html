@@ -1,7 +1,7 @@
 <div class="form-container">
     <mat-card class="form-card">
         <mat-card-header>
-            <mat-card-title>Editar Sala</mat-card-title>
+            <mat-card-title>Editar {{ editableData.name }}</mat-card-title>
             <mat-card-subtitle>Atualize as informações da Sala</mat-card-subtitle>
         </mat-card-header>
 
@@ -9,27 +9,33 @@
             <form class="example-form">
                 <mat-form-field class="example-full-width">
                     <mat-label>Nome</mat-label>
-                    <input matInput placeholder="Laboratório">
+                    <input matInput [(ngModel)]="editableData.name" name="name">
                 </mat-form-field>
 
                 <mat-form-field class="example-full-width">
                     <mat-label>Número da Sala</mat-label>
-                    <input type="number" matInput placeholder="">
+                    <input type="number" matInput [(ngModel)]="editableData.roomNumber" name="roomNumber">
                 </mat-form-field>
 
                 <mat-form-field class="example-full-width">
                     <mat-label>Capacidade da Sala</mat-label>
-                    <input type="number" matInput placeholder="Ex: 60">
+                    <input type="number" matInput [(ngModel)]="editableData.capacity" name="capacity">
                 </mat-form-field>
 
                 <section class="example-section">
-                    <mat-checkbox class="example-margin" color="primary">Projetor</mat-checkbox>
+                    <mat-checkbox 
+                        class="example-margin" 
+                        color="primary"
+                        [(ngModel)]="projetorChecked" 
+                        name="projetorCheckbox">
+                        Possui Projetor
+                    </mat-checkbox>
                 </section>
             </form>
         </mat-card-content>
 
         <mat-card-actions align="end" class="btn">
-            <button mat-raised-button color="primary">Salvar</button>
+            <button mat-raised-button color="primary" (click)="onSave()">Salvar</button>
         </mat-card-actions>
         
     </mat-card>
