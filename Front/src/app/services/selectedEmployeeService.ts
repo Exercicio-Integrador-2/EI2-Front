@@ -13,7 +13,7 @@ export class SelectedEmployeeService {
     this.employeeSource.next(employee);
   }
 
-  getEmployee(): EmployeeDTO | null {
+  async getEmployee(): Promise<EmployeeDTO | null> {
     return this.employeeSource.value;
   }
 }

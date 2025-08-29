@@ -14,7 +14,7 @@ export class LaboratoryService {
     return this.http.get<LaboratoryDTO[]>(this.baseUrl);
   }
 
-  async update(lab: LaboratoryCreateDTO): Promise<Observable<LaboratoryDTO>> {
+  update(lab: LaboratoryCreateDTO): Observable<LaboratoryDTO> {
     return this.http.put<LaboratoryDTO>(this.baseUrl, lab);
   }
 
