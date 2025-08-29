@@ -58,7 +58,7 @@ export class NotebookComponent {
     // (await this.resourceLogService.create())
 
     // MOCK temporário ↓
-    console.log(`Reservado ${notebook.name} (${notebook.patrimonyNumber}) para ${dataISO}`);
+    // console.log(`Reservado ${notebook.name} (${notebook.patrimonyNumber}) para ${dataISO}`);
     this.buscarDisponiveis();
   }
 }
