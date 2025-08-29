@@ -8,6 +8,7 @@ import { NotebookGerenciamentoComponent } from './shared/gerenciamento/notebook/
 import { SalaGerenciamentoComponent } from './shared/gerenciamento/sala/sala.component';
 import { LaboratorioGerenciamentoComponent } from './shared/gerenciamento/laboratorio/laboratorio.component';
 import { HomeComponent } from './pages/home/home.component';
+import { OcorrenciasComponent } from './pages/dashboards/ocorrencias/ocorrencias.component';
 import { CriaNotebookComponent } from './pages/gerenciamento/cria-notebook/cria-notebook.component';
 
 export const routes: Routes = [
@@ -19,6 +20,7 @@ export const routes: Routes = [
 
     { path: 'dashboards/geral', component: GeralComponent },
     { path: 'dashboards/pessoal', component: PessoalComponent },
+    { path: 'dashboards/ocorrencias', component: OcorrenciasComponent },
 
     { path: 'gerenciamento/notebook', component: CriaNotebookComponent },
 
