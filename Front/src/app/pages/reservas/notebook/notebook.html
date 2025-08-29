@@ -1,24 +1,54 @@
+<!-- reserva-notebooks.component.html -->
 <div class="container">
-    <div>
-        <div class="card" >
-        <mat-card class="example-card" appearance="outlined">
-            <mat-card-header>
-                <mat-card-title>Chihuahua</mat-card-title>
-            </mat-card-header>
-            <mat-card-content>
-                <p>{{longText}}</p>
-            </mat-card-content>
-            <mat-card-footer class="example-card-footer">
-                <mat-chip-set aria-label="Chihuahua traits">
-                <mat-chip>charming</mat-chip>
-                <mat-chip>graceful</mat-chip>
-                <mat-chip>sassy</mat-chip>
-                </mat-chip-set>
-            </mat-card-footer>
-        </mat-card>
+  <mat-form-field appearance="outline">
+    <mat-label>Selecione a data</mat-label>
+    <input matInput [matDatepicker]="picker" [(ngModel)]="selectedDate">
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+  </mat-form-field>
 
-    </div>
+  <table mat-table [dataSource]="notebooks" class="mat-elevation-z8 full-width-table">
 
-    </div>
-    
+    <!-- Nome -->
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef> Nome </th>
+      <td mat-cell *matCellDef="let notebook"> {{notebook.name}} </td>
+    </ng-container>
+
+    <!-- Patrimônio -->
+    <ng-container matColumnDef="patrimonyNumber">
+      <th mat-header-cell *matHeaderCellDef> Patrimônio </th>
+      <td mat-cell *matCellDef="let notebook"> {{notebook.patrimonyNumber}} </td>
+    </ng-container>
+
+    <!-- Descrição -->
+    <ng-container matColumnDef="description">
+      <th mat-header-cell *matHeaderCellDef> Descrição </th>
+      <td mat-cell *matCellDef="let notebook"> {{notebook.description}} </td>
+    </ng-container>
+
+    <!-- Status -->
+    <ng-container matColumnDef="status">
+      <th mat-header-cell *matHeaderCellDef> Status </th>
+      <td mat-cell *matCellDef="let notebook">
+        <span *ngIf="isBookedOnDate(notebook)" class="text-red-600"> Reservado </span>
+        <span *ngIf="!isBookedOnDate(notebook)" class="text-green-600"> Disponível </span>
+      </td>
+    </ng-container>
+
+    <!-- Ações -->
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef> Ações </th>
+      <td mat-cell *matCellDef="let notebook">
+        <button mat-raised-button color="primary"
+          [disabled]="!selectedDate || isBookedOnDate(notebook)"
+          (click)="reservar(notebook)">
+          Reservar
+        </button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
 </div>
