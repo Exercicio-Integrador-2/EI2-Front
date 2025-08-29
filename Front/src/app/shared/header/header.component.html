@@ -12,7 +12,7 @@
       <mat-label>Funcionário</mat-label>
       <mat-select [(value)]="selected" (selectionChange)="onUserChange($event.value)">
         <mat-option *ngFor="let emp of employees" [value]="emp">
-          {{ emp.name }} ({{ emp.enrollmentId }})
+          {{ emp.name }} - ({{ emp.enrollmentId }})
         </mat-option>
       </mat-select>
     </mat-form-field>

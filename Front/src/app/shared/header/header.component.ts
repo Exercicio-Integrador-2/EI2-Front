@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatSelectModule } from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { CommonModule } from '@angular/common';
 import { EmployeeDTO } from '../../models/get/employee.dto';
 import { EmployeeService } from '../../services/employee.service';
 import { SelectedEmployeeService } from '../../services/selectedEmployeeService';
@@ -8,7 +9,7 @@ import { SelectedEmployeeService } from '../../services/selectedEmployeeService'
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [MatFormFieldModule, MatSelectModule],
+  imports: [MatFormFieldModule, MatSelectModule, CommonModule],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss'
 })
