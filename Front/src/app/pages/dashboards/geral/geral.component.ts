@@ -5,6 +5,11 @@ import {MatTableDataSource, MatTableModule} from '@angular/material/table';
 import { MatIconModule } from '@angular/material/icon';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
 
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { NotebookGerenciamentoComponent } from '../../../shared/gerenciamento/notebook/notebook.component'; 
+import { LaboratorioGerenciamentoComponent } from '../../../shared/gerenciamento/laboratorio/laboratorio.component'; 
+import { SalaGerenciamentoComponent } from '../../../shared/gerenciamento/sala/sala.component'; 
+
 
 export const NOTEBOOKS_DATA = [
   { 
@@ -90,6 +95,8 @@ export const LABS_DATA = [
   styleUrl: './geral.scss'
 })
 export class GeralComponent{  
+  constructor(private dialog: MatDialog) {}
+
   selectedView: string = 'notes'; 
 
   notebooksDataSource = new MatTableDataSource<any>();
@@ -101,8 +108,6 @@ export class GeralComponent{
   labsDataSource = new MatTableDataSource<any>();
   labsDisplayedColumns: string[] = ['nome', 'qtd_pc', 'desc', 'edit'];
 
-
-  constructor() {}
 
   ngOnInit() {
     this.fetchNotebooks();
@@ -147,6 +152,30 @@ export class GeralComponent{
   }
 
   editItem(element: any, type: string) {
-    console.log(`Editando item do tipo ${type}:`, element);
+    let dialogRef;
+
+    switch (type) {
+      case 'notes':
+        dialogRef = this.dialog.open(NotebookGerenciamentoComponent, {
+          width: '700px',
+          data: element // Passa os dados do notebook para o modal
+        });
+        break;
+      
+      case 'salas':
+         dialogRef = this.dialog.open(SalaGerenciamentoComponent, {
+          width: '700px',
+          data: element // Passa os dados do notebook para o modal
+        });
+        break;
+
+      case 'labs':
+         dialogRef = this.dialog.open(LaboratorioGerenciamentoComponent, {
+          width: '700px',
+          data: element // Passa os dados do notebook para o modal
+        });
+
+        break;
+    }
   }
 }
