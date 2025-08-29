@@ -1,108 +1,72 @@
-// reserva-notebooks.component.ts
-import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { HttpClient } from '@angular/common/http';
-
-// Angular Material
 import { MatFormFieldModule } from "@angular/material/form-field";
-import { MatInputModule } from "@angular/material/input";
-import { MatDatepickerModule } from "@angular/material/datepicker";
-import { MatNativeDateModule } from "@angular/material/core";
-import { MatButtonModule } from "@angular/material/button";
+import { MatInputModule } from "@angular/material/input"; 
+import { MatDatepickerModule } from "@angular/material/datepicker"; 
+import { MatNativeDateModule } from "@angular/material/core"; 
+import { MatButtonModule } from "@angular/material/button"; 
 import { MatTableModule } from "@angular/material/table";
 
-interface Notebook {
-  description: string;
-  patrimonyNumber: number;
-  acquisitionDate: string;
-  id: number;
-  name: string;
-  resourceType: string;
-  bookedDates: string[];
-}
-
 @Component({
-  selector: 'app-reserva-notebooks',
+  selector: 'app-notebook',
   standalone: true,
   templateUrl: './notebook.html',
   styleUrls: ['./notebook.scss'],
   imports: [
-    CommonModule,
     FormsModule,
-
-    // Angular Material
     MatFormFieldModule,
     MatInputModule,
     MatDatepickerModule,
     MatNativeDateModule,
     MatButtonModule,
-    MatTableModule,
+    MatTableModule
   ]
 })
-export class NotebookComponent implements OnInit {
-  notebooks: Notebook[] = [];
+export class NotebookComponent {
   selectedDate: Date | null = null;
-  displayedColumns = ['name', 'patrimonyNumber', 'description', 'status', 'actions'];
+  notebooks: any[] = [];
+  displayedColumns: string[] = ['name', 'patrimonyNumber', 'description', 'status', 'actions'];
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    // private reservaService: ReservaService   // ← descomentar e injetar quando integrar
+  ) {}
 
-  ngOnInit(): void {
-    // MOCK: poderia vir do backend com HttpClient
+  buscarDisponiveis() {
+    if (!this.selectedDate) return;
+
+    const dataISO = this.selectedDate.toISOString().split('T')[0];
+
+    // chamada real pro backend
+    /*
+    this.reservaService.getDisponiveisPorData(dataISO).subscribe({
+      next: (data) => this.notebooks = data,
+      error: (err) => console.error('Erro ao carregar notebooks', err)
+    });
+    */
+
+    // MOCK temporário ↓
     this.notebooks = [
-      {
-        description: "Standard user notebook",
-        patrimonyNumber: 1234,
-        acquisitionDate: "2023-08-28T14:53:10.9044804",
-        id: 5,
-        name: "Notebook Inspiron 15",
-        resourceType: "Notebook",
-        bookedDates: ["2025-08-17T14:53:11.0235085"]
-      },
-      {
-        description: "High-performance notebook",
-        patrimonyNumber: 4321,
-        acquisitionDate: "2024-08-28T14:53:10.904501",
-        id: 6,
-        name: "Notebook Gamer G15",
-        resourceType: "Notebook",
-        bookedDates: ["2025-08-23T14:53:11.0235701"]
-      },
-      {
-        description: "Corporate notebook",
-        patrimonyNumber: 5678,
-        acquisitionDate: "2024-08-28T14:53:10.9045012",
-        id: 7,
-        name: "Notebook Latitude 3550",
-        resourceType: "Notebook",
-        bookedDates: []
-      },
-      {
-        description: "Developer notebook",
-        patrimonyNumber: 8765,
-        acquisitionDate: "2024-08-28T14:53:10.9045013",
-        id: 8,
-        name: "Notebook Inspiron 16 Plus",
-        resourceType: "Notebook",
-        bookedDates: []
-      }
+      { name: 'Dell Inspiron', patrimonyNumber: '123', description: 'Notebook de testes' },
+      { name: 'Lenovo ThinkPad', patrimonyNumber: '456', description: 'Notebook de trabalho' },
+      { name: 'Acer Aspire', patrimonyNumber: '789', description: 'Notebook reserva' },
     ];
   }
 
-  isBookedOnDate(notebook: Notebook): boolean {
-    if (!this.selectedDate) return false;
-    return notebook.bookedDates.some(dateStr => {
-      const bookedDate = new Date(dateStr);
-      return bookedDate.toDateString() === this.selectedDate!.toDateString();
-    });
-  }
-
-  reservar(notebook: Notebook) {
+  reservar(notebook: any) {
     if (!this.selectedDate) return;
 
-    // MOCK: simula envio pro backend e já marca no array local
-    notebook.bookedDates.push(this.selectedDate.toISOString());
+    const dataISO = this.selectedDate.toISOString().split('T')[0];
 
-    console.log(`✅ Reservado: ${notebook.name} para ${this.selectedDate.toDateString()}`);
+    // chamada real pro backend
+    /*
+    this.reservaService.reservarNotebook(notebook.id, dataISO).subscribe({
+      next: () => this.buscarDisponiveis(),
+      error: (err) => console.error('Erro ao reservar', err)
+    });
+    */
+
+    // MOCK temporário ↓
+    console.log(`Reservado ${notebook.name} (${notebook.patrimonyNumber}) para ${dataISO}`);
+    this.buscarDisponiveis();
   }
 }

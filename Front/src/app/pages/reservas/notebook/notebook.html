@@ -1,13 +1,18 @@
-<!-- reserva-notebooks.component.html -->
 <div class="container">
   <mat-form-field appearance="outline">
     <mat-label>Selecione a data</mat-label>
-    <input matInput [matDatepicker]="picker" [(ngModel)]="selectedDate">
+    <input 
+      matInput 
+      [matDatepicker]="picker" 
+      [(ngModel)]="selectedDate" 
+      (dateChange)="buscarDisponiveis()" />
     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
     <mat-datepicker #picker></mat-datepicker>
   </mat-form-field>
 
-  <table mat-table [dataSource]="notebooks" class="mat-elevation-z8 full-width-table">
+  <table *ngIf="notebooks.length > 0" 
+         mat-table [dataSource]="notebooks" 
+         class="mat-elevation-z8 full-width-table">
 
     <!-- Nome -->
     <ng-container matColumnDef="name">
@@ -31,8 +36,7 @@
     <ng-container matColumnDef="status">
       <th mat-header-cell *matHeaderCellDef> Status </th>
       <td mat-cell *matCellDef="let notebook">
-        <span *ngIf="isBookedOnDate(notebook)" class="text-red-600"> Reservado </span>
-        <span *ngIf="!isBookedOnDate(notebook)" class="text-green-600"> Disponível </span>
+        <span class="text-green-600"> Disponível </span>
       </td>
     </ng-container>
 
@@ -40,9 +44,7 @@
     <ng-container matColumnDef="actions">
       <th mat-header-cell *matHeaderCellDef> Ações </th>
       <td mat-cell *matCellDef="let notebook">
-        <button mat-raised-button color="primary"
-          [disabled]="!selectedDate || isBookedOnDate(notebook)"
-          (click)="reservar(notebook)">
+        <button mat-raised-button color="primary" (click)="reservar(notebook)">
           Reservar
         </button>
       </td>
@@ -51,4 +53,8 @@
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
   </table>
+
+  <p *ngIf="selectedDate && notebooks.length === 0" class="text-red-600">
+    Nenhum notebook disponível nesta data.
+  </p>
 </div>
