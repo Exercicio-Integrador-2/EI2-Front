@@ -1,0 +1,19 @@
+.table-container {
+  margin: 10px;
+  width: 98%;
+  height: 100%;
+
+  th {
+    background-color: rgb(190, 216, 234);
+  }
+
+  th.mat-column-edit,
+  td.mat-column-edit {
+    width: 100px; 
+  }
+
+  button {
+    color: rgb(66, 66, 181);
+  }
+
+}
