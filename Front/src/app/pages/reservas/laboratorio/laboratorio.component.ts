@@ -11,6 +11,9 @@ import { ResourceLogService } from '../../../services/resourcelog.service';
 import { ResourceLogCreateDTO } from '../../../models/create/resource-log-create.dto';
 import { LaboratoryService } from '../../../services/laboratory.service';
 import { LaboratoryDTO } from '../../../models/get/laboratory.dto';
+import { firstValueFrom } from 'rxjs';
+import { SelectedEmployeeService } from '../../../services/selectedEmployeeService';
+import { EmployeeDTO } from '../../../models/get/employee.dto';
 
 @Component({
   selector: 'app-laboratory',
@@ -35,7 +38,8 @@ export class LaboratorioComponent {
 
   constructor(
     private laboratoryService : LaboratoryService,
-    private resourceLogService : ResourceLogService
+    private resourceLogService : ResourceLogService,
+    private selectedEmployeeService : SelectedEmployeeService
   ) {}
 
   async buscarDisponiveis() {
@@ -48,17 +52,25 @@ export class LaboratorioComponent {
     });
   }
 
-  async reservar(resourceLog : ResourceLogCreateDTO) {
+async reservar(laboratory: LaboratoryDTO) {
     if (!this.selectedDate) return;
+
+    const employee : EmployeeDTO | null = (await this.selectedEmployeeService.getEmployee());
+    console.log(employee);
+
+    if (!employee) return;
 
     const dataISO = this.selectedDate.toISOString().split('T')[0];
 
-    
+    const resourceLog: ResourceLogCreateDTO = {
+      loanDate: dataISO,
+      resourceId: laboratory.id,
+      employeeId: employee.enrollmentId
+    };
 
-    // (await this.resourceLogService.create())
+    await firstValueFrom(this.resourceLogService.create(resourceLog));
 
-    // MOCK temporário ↓
-    // console.log(`Reservado ${laboratory.name} (${laboratory.pcQuantity}) para ${dataISO}`);
+    // "Reload"
     this.buscarDisponiveis();
   }
 }
