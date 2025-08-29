@@ -1,19 +1,25 @@
-.table-container {
+.page {
   margin: 10px;
-  width: 98%;
-  height: 100%;
 
-  th {
-    background-color: rgb(190, 216, 234);
-  }
+  .table-container {
+  
+    width: 100%;
+    height: 100%;
 
-  th.mat-column-edit,
-  td.mat-column-edit {
-    width: 100px; 
-  }
+    th {
+      background-color: rgb(190, 216, 234);
+    }
 
-  button {
-    color: rgb(66, 66, 181);
+    th.mat-column-edit,
+    td.mat-column-edit {
+      width: 100px; 
+    }
+
+  } 
+
+  .buttons {
+    padding-bottom: 10px;
+    
   }
 
 }

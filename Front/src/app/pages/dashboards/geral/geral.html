@@ -1,46 +1,139 @@
-<div class="table-container">
-    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
-
-    <!--- Note that these columns can be defined in any order.
-            The actual rendered columns are set as a property on the row definition" -->
-
-    <!-- Position Column -->
-    <ng-container matColumnDef="num">
-        <th mat-header-cell *matHeaderCellDef> No. </th>
-        <td mat-cell *matCellDef="let element"> {{element.position}} </td>
-    </ng-container>
-
-    <!-- Name Column -->
-    <ng-container matColumnDef="nome">
-        <th mat-header-cell *matHeaderCellDef> Nome </th>
-        <td mat-cell *matCellDef="let element"> {{element.name}} </td>
-    </ng-container>
-
-    <!-- Weight Column -->
-    <ng-container matColumnDef="desc">
-        <th mat-header-cell *matHeaderCellDef> Desc. </th>
-        <td mat-cell *matCellDef="let element"> {{element.weight}} </td>
-    </ng-container>
-
-    <!-- Symbol Column -->
-    <ng-container matColumnDef="tipo">
-        <th mat-header-cell *matHeaderCellDef> Tipo </th>
-        <td mat-cell *matCellDef="let element"> {{element.symbol}} </td>
-    </ng-container>
-
-        <!-- Edit Btn Column -->
-    <ng-container matColumnDef="edit">
-        <th mat-header-cell *matHeaderCellDef>  </th>
-        <td mat-cell *matCellDef="let element">
-            <button mat-icon-button color="primary" (click)="editItem(element)">
-            <mat-icon>edit</mat-icon>
-            </button>
-        </td>
-        </ng-container>
-
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-    </table>
+<div class="page">
+    
+    <div class="buttons">
+        <mat-button-toggle-group (valueChange)="onViewChange($event)" value="notes" name="viewToggle">
+            <mat-button-toggle value="notes">Notebooks</mat-button-toggle>
+            <mat-button-toggle value="salas">Salas</mat-button-toggle>
+            <mat-button-toggle value="labs">Laboratórios</mat-button-toggle>
+        </mat-button-toggle-group>
+    </div>
 
 
+    <div class="table-container" [ngSwitch]="selectedView">
+
+        <!--TABELA DE NOTEBOOKS-->
+        <div *ngSwitchCase="'notes'" >
+            <table mat-table [dataSource]="notebooksDataSource" class="mat-elevation-z8">
+
+            <ng-container matColumnDef="nome">
+                <th mat-header-cell *matHeaderCellDef> Nome </th>
+                <td mat-cell *matCellDef="let element"> {{element.nome}} </td>
+            </ng-container>
+
+           
+            <ng-container matColumnDef="patrimonio">
+                <th mat-header-cell *matHeaderCellDef> Nº de Patrimônio </th>
+                <td mat-cell *matCellDef="let element"> {{element.patrimonio}} </td>
+            </ng-container>
+
+            
+            <ng-container matColumnDef="desc">
+                <th mat-header-cell *matHeaderCellDef> Descrição </th>
+                <td mat-cell *matCellDef="let element"> {{element.desc}} </td>
+            </ng-container>
+
+            
+            <ng-container matColumnDef="data">
+                <th mat-header-cell *matHeaderCellDef> Data de Aquisição </th>
+                <td mat-cell *matCellDef="let element"> {{element.data}} </td>
+            </ng-container>
+
+                <!-- Edit Btn Column -->
+            <ng-container matColumnDef="edit">
+                <th mat-header-cell *matHeaderCellDef>  </th>
+                <td mat-cell *matCellDef="let element">
+                    <button mat-icon-button color="primary" (click)="editItem(element, 'notes')">
+                    <mat-icon>edit</mat-icon>
+                    </button>
+                </td>
+                </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="notebooksDisplayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: notebooksDisplayedColumns;"></tr>
+            </table>
+        </div>
+        
+
+        <!--TABELA DE SALAS-->
+        <div *ngSwitchCase="'salas'" >
+            <table mat-table [dataSource]="salasDataSource" class="mat-elevation-z8">
+
+                <ng-container matColumnDef="nome">
+                    <th mat-header-cell *matHeaderCellDef> Nome </th>
+                    <td mat-cell *matCellDef="let element"> {{element.nome}} </td>
+                </ng-container>
+
+            
+                <ng-container matColumnDef="num">
+                    <th mat-header-cell *matHeaderCellDef> Nº </th>
+                    <td mat-cell *matCellDef="let element"> {{element.num}} </td>
+                </ng-container>
+
+                
+                <ng-container matColumnDef="capacidade">
+                    <th mat-header-cell *matHeaderCellDef> Caapcidade </th>
+                    <td mat-cell *matCellDef="let element"> {{element.capacidade}} </td>
+                </ng-container>
+
+                
+                <ng-container matColumnDef="projetor">
+                    <th mat-header-cell *matHeaderCellDef> Projetor </th>
+                    <td mat-cell *matCellDef="let element"> {{element.projetor}} </td>
+                </ng-container>
+
+                    <!-- Edit Btn Column -->
+                <ng-container matColumnDef="edit">
+                    <th mat-header-cell *matHeaderCellDef>  </th>
+                    <td mat-cell *matCellDef="let element">
+                        <button mat-icon-button color="primary" (click)="editItem(element, 'salas')">
+                        <mat-icon>edit</mat-icon>
+                        </button>
+                    </td>
+                    </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="salasDisplayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: salasDisplayedColumns;"></tr>
+            </table>
+        </div>
+
+        <!--TABELA DE LABS-->
+        <div *ngSwitchCase="'labs'" >
+            <table mat-table [dataSource]="labsDataSource" class="mat-elevation-z8">
+
+            <ng-container matColumnDef="nome">
+                <th mat-header-cell *matHeaderCellDef> Nome </th>
+                <td mat-cell *matCellDef="let element"> {{element.nome}} </td>
+            </ng-container>
+
+           
+            <ng-container matColumnDef="qtd_pc">
+                <th mat-header-cell *matHeaderCellDef> Nº de PC's </th>
+                <td mat-cell *matCellDef="let element"> {{element.qtd_pc }} </td>
+            </ng-container>
+
+            
+            <ng-container matColumnDef="desc">
+                <th mat-header-cell *matHeaderCellDef> Descrição </th>
+                <td mat-cell *matCellDef="let element"> {{element.desc }} </td>
+            </ng-container>
+
+
+                <!-- Edit Btn Column -->
+            <ng-container matColumnDef="edit">
+                <th mat-header-cell *matHeaderCellDef>  </th>
+                <td mat-cell *matCellDef="let element">
+                    <button mat-icon-button color="primary" (click)="editItem(element, 'labs')">
+                    <mat-icon>edit</mat-icon>
+                    </button>
+                </td>
+                </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="labsDisplayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: labsDisplayedColumns;"></tr>
+            </table>
+        </div>
+
+
+    </div>
+        
 </div>
