@@ -13,6 +13,10 @@
     display: flex;
     flex-direction: row;
     flex: 1; 
+    .side-bar-content {
+      padding: 0px 0px;
+      border-right: 1px solid rgb(209, 209, 209); 
+    }
 
     .main-content{
       width: 100%;
