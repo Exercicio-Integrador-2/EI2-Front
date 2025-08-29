@@ -53,7 +53,9 @@ export class NotebookComponent {
 
     const dataISO = this.selectedDate.toISOString().split('T')[0];
 
-    (await this.resourceLogService.create())
+    
+
+    // (await this.resourceLogService.create())
 
     // MOCK temporário ↓
     console.log(`Reservado ${notebook.name} (${notebook.patrimonyNumber}) para ${dataISO}`);
